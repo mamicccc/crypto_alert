@@ -1,0 +1,17 @@
+import requests
+import time
+
+COIN = "bitcoin"
+TARGET_PRICE = 60000  # hedef fiyat (USD)
+
+def get_price(coin):
+    url = f"https://api.coingecko.com/api/v3/simple/price?ids={coin}&vs_currencies=usd"
+    return requests.get(url).json()[coin]["usd"]
+
+while True:
+    price = get_price(COIN)
+    print(f"{COIN.capitalize()} Price: ${price}")
+    if price >= TARGET_PRICE:
+        print("🚨 Alert! Target price reached!")
+        break
+    time.sleep(30)  # 30 saniyede bir kontrol
